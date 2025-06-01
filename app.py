@@ -28,6 +28,7 @@ model = tf.keras.models.load_model(MODEL_PATH)
 
 # Klasyfikator twarzy
 facecasc = cv.CascadeClassifier(cv.data.haarcascades + 'haarcascade_frontalface_default.xml')
+print("Cascade classifier loaded:", not facecasc.empty())
 
 # API endpoint
 @app.route('/predict', methods=['POST'])
@@ -41,8 +42,12 @@ def predict_emotion():
         image = image.convert('RGB')
         image = np.array(image)
 
+        print("Received image shape:", image.shape)
+        print("Image dtype:", image.dtype)
+        
         gray = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
         faces = facecasc.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+        print("Faces detected:", faces)
 
         if len(faces) == 0:
             return jsonify({'error': 'No face detected'}), 400
@@ -64,7 +69,7 @@ def predict_emotion():
 
 @app.route("/", methods=["GET"])
 def index():
-    return "✅ Emotion Scanner API is working!"
+    return "Emotion Scanner API is working!"
     
 # Start serwera
 if __name__ == '__main__':
