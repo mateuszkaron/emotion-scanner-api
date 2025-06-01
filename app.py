@@ -62,6 +62,10 @@ def predict_emotion():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route("/", methods=["GET"])
+def index():
+    return "✅ Emotion Scanner API is working!"
+    
 # Start serwera
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
