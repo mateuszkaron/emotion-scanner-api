@@ -32,6 +32,7 @@ facecasc = cv.CascadeClassifier(cv.data.haarcascades + 'haarcascade_frontalface_
 # API endpoint
 @app.route('/predict', methods=['POST'])
 def predict_emotion():
+    print("Received files:", request.files)
     if 'image' not in request.files:
         return jsonify({'error': 'No image provided'}), 400
 
