@@ -58,6 +58,7 @@ def predict_emotion():
         input_image = np.expand_dims(np.expand_dims(roi_resized, -1), 0)
 
         prediction = model.predict(input_image, verbose=0)
+        print("Model prediction:", prediction)
         max_index = int(np.argmax(prediction))
         emotion = emotion_dict[max_index]
         confidence = float(np.max(prediction)) * 100
